@@ -6,68 +6,67 @@
 <div class="container">
     <h1 class="mb-4">My Dashboard</h1>
 
-    <div class="grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem;">
-        <div class="card"
-            style="background-color: var(--card-bg); padding: 2rem; border-radius: 0.5rem; box-shadow: var(--shadow);">
-            <h2>My Orders</h2>
-            <ul class="mt-4" style="list-style: none;">
-                {% for order in my_orders %}
-                <li style="padding: 0.5rem 0; border-bottom: 1px solid var(--border-color);">
-                    {{ order.service.title }} - ${{ order.service.price }}
-                    <span style="float: right;">{{ order.status }}</span>
-                </li>
-                {% empty %}
-                <li>You haven't purchased any services yet.</li>
-                {% endfor %}
-            </ul>
-            <a href="#" class="btn btn-primary mt-4">Browse Services</a>
-        </div>
-
-        <div class="card"
-            style="background-color: var(--card-bg); padding: 2rem; border-radius: 0.5rem; box-shadow: var(--shadow);">
-            <h2>My Appointments</h2>
-
-
-
-<div class="container">
-    <h1 class="mb-4">My Dashboard</h1>
-
-    <div class="grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem;">
-        <div class="card"
-            style="background-color: var(--card-bg); padding: 2rem; border-radius: 0.5rem; box-shadow: var(--shadow);">
-            <h2>My Orders</h2>
-            <ul class="mt-4" style="list-style: none;">
-                {% for order in my_orders %}
-                <li style="padding: 0.5rem 0; border-bottom: 1px solid var(--border-color);">
-                    {{ order.service.title }} - ${{ order.service.price }}
-                    <span style="float: right;">{{ order.status }}</span>
-                </li>
-                {% empty %}
-                <li>You haven't purchased any services yet.</li>
-                {% endfor %}
-            </ul>
-            <a href="#" class="btn btn-primary mt-4">Browse Services</a>
-        </div>
-
-        <div class="card"
-            style="background-color: var(--card-bg); padding: 2rem; border-radius: 0.5rem; box-shadow: var(--shadow);">
-            <h2>My Appointments</h2>
-            <ul class="mt-4" style="list-style: none;">
-                {% for appointment in my_appointments %}
-                <li style="padding: 0.5rem 0; border-bottom: 1px solid var(--border-color);">
-                    {{ appointment.date|date:"M d, Y H:i" }}
-                    <span style="float: right;">{{ appointment.status }}</span>
-                </li>
-                {% empty %}
-                <li>No upcoming appointments.</li>
-                {% endfor %}
-            </ul>
-            <div class="mt-4" style="display: flex; gap: 1rem;">
-                <a href="{% url 'book_appointment' %}" class="btn btn-primary">Schedule Appointment</a>
-                <a href="{% url 'book_demo' %}" class="btn btn-text">Request Demo</a>
-            </div>
-        </div>
+    <div class="mb-4">
+        <a href="{% url 'book_appointment' %}" class="btn btn-primary">Schedule Appointment</a>
+        <a href="{% url 'book_demo' %}" class="btn btn-primary">Request Demo</a>
+        <a href="{% url 'service_list' %}" class="btn btn-text">Browse Services</a>
     </div>
 
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem;">
+        <!-- Orders -->
+        <div class="card"
+            style="background-color: var(--card-bg); padding: 2rem; border-radius: 0.5rem; box-shadow: var(--shadow);">
+            <h2>My Orders</h2>
+            <ul style="list-style: none; margin-top: 1rem;">
+                {% for order in orders %}
+                <li style="padding: 0.5rem 0; border-bottom: 1px solid var(--border-color);">
+                    <strong>{{ order.service.title }}</strong> - ${{ order.service.price }}
+                    <br>
+                    <span style="font-size: 0.875rem; opacity: 0.7;">Status: {{ order.status }}</span>
+                </li>
+                {% empty %}
+                <li>No orders yet.</li>
+                {% endfor %}
+            </ul>
+        </div>
+
+        <!-- Appointments -->
+        <div class="card"
+            style="background-color: var(--card-bg); padding: 2rem; border-radius: 0.5rem; box-shadow: var(--shadow);">
+            <h2>My Appointments</h2>
+            <ul style="list-style: none; margin-top: 1rem;">
+                {% for appointment in appointments %}
+                <li style="padding: 0.5rem 0; border-bottom: 1px solid var(--border-color);">
+                    <strong>{{ appointment.date }}</strong>
+                    <br>
+                    {{ appointment.reason }}
+                    <br>
+                    <span style="font-size: 0.875rem; opacity: 0.7;">Status: {{ appointment.status }}</span>
+                </li>
+                {% empty %}
+                <li>No appointments scheduled.</li>
+                {% endfor %}
+            </ul>
+        </div>
+
+        <!-- Demos -->
+        <div class="card"
+            style="background-color: var(--card-bg); padding: 2rem; border-radius: 0.5rem; box-shadow: var(--shadow);">
+            <h2>My Demos</h2>
+            <ul style="list-style: none; margin-top: 1rem;">
+                {% for demo in demos %}
+                <li style="padding: 0.5rem 0; border-bottom: 1px solid var(--border-color);">
+                    <strong>{{ demo.date }}</strong>
+                    <br>
+                    Product: {{ demo.product_interest }}
+                    <br>
+                    <span style="font-size: 0.875rem; opacity: 0.7;">Status: {{ demo.status }}</span>
+                </li>
+                {% empty %}
+                <li>No demos requested.</li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
 </div>
 {% endblock %}

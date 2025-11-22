@@ -6,37 +6,96 @@
 <div class="container">
     <h1 class="mb-4">Admin Dashboard</h1>
 
-    <div class="grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem;">
-        <div class="card"
-            style="background-color: var(--card-bg); padding: 2rem; border-radius: 0.5rem; box-shadow: var(--shadow);">
+    <!-- Staff Management -->
+    <div class="card mb-4"
+        style="background-color: var(--card-bg); padding: 2rem; border-radius: 0.5rem; box-shadow: var(--shadow);">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
             <h2>Staff Management</h2>
-            <ul class="mt-4" style="list-style: none;">
-                {% for staff in staff_members %}
-                <li style="padding: 0.5rem 0; border-bottom: 1px solid var(--border-color);">
-                    {{ staff.username }} - {{ staff.email }}
-                    <a href="/admin/accounts/user/{{ staff.id }}/change/" class="btn btn-text"
-                        style="float: right; color: var(--primary-color);">Manage</a>
-                </li>
-                {% empty %}
-                <li>No staff members found.</li>
-                {% endfor %}
-            </ul>
-            <a href="/admin/accounts/user/add/" class="btn btn-primary mt-4">Add Staff</a>
+            <a href="{% url 'add_staff' %}" class="btn btn-primary">Add Staff</a>
         </div>
+        <div style="overflow-x: auto;">
+            <table style="width: 100%; border-collapse: collapse;">
+                <thead>
+                    <tr style="text-align: left; border-bottom: 1px solid var(--border-color);">
+                        <th style="padding: 0.5rem;">Username</th>
+                        <th style="padding: 0.5rem;">Email</th>
+                        <th style="padding: 0.5rem;">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for staff in staff_members %}
+                    <tr style="border-bottom: 1px solid var(--border-color);">
+                        <td style="padding: 0.5rem;">{{ staff.username }}</td>
+                        <td style="padding: 0.5rem;">{{ staff.email }}</td>
+                        <td style="padding: 0.5rem;">
+                            <a href="{% url 'edit_staff' staff.id %}" class="btn btn-text"
+                                style="color: var(--primary-color);">Edit</a>
+                            <a href="{% url 'delete_staff' staff.id %}" class="btn btn-text"
+                                style="color: red;">Delete</a>
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="3" style="padding: 0.5rem;">No staff members found.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
 
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem;">
+        <!-- All Orders -->
         <div class="card"
             style="background-color: var(--card-bg); padding: 2rem; border-radius: 0.5rem; box-shadow: var(--shadow);">
             <h2>Recent Orders</h2>
-            <ul class="mt-4" style="list-style: none;">
-                {% for order in recent_orders %}
+            <ul style="list-style: none; margin-top: 1rem;">
+                {% for order in all_orders %}
                 <li style="padding: 0.5rem 0; border-bottom: 1px solid var(--border-color);">
-                    #{{ order.id }} - {{ order.service.title }} ({{ order.status }})
+                    <strong>{{ order.service.title }}</strong> ({{ order.customer.username }})
+                    <br>
+                    <span style="font-size: 0.875rem; opacity: 0.7;">Status: {{ order.status }}</span>
                 </li>
                 {% empty %}
-                <li>No recent orders.</li>
+                <li>No orders found.</li>
                 {% endfor %}
             </ul>
-            <a href="/admin/services/order/" class="btn btn-text mt-4">View All Orders</a>
+        </div>
+
+        <!-- All Appointments -->
+        <div class="card"
+            style="background-color: var(--card-bg); padding: 2rem; border-radius: 0.5rem; box-shadow: var(--shadow);">
+            <h2>Appointments</h2>
+            <ul style="list-style: none; margin-top: 1rem;">
+                {% for appointment in all_appointments %}
+                <li style="padding: 0.5rem 0; border-bottom: 1px solid var(--border-color);">
+                    <strong>{{ appointment.date }}</strong> ({{ appointment.customer.username }})
+                    <br>
+                    {{ appointment.reason }}
+                </li>
+                {% empty %}
+                <li>No appointments found.</li>
+                {% endfor %}
+            </ul>
+        </div>
+
+        <!-- All Messages -->
+        <div class="card"
+            style="background-color: var(--card-bg); padding: 2rem; border-radius: 0.5rem; box-shadow: var(--shadow);">
+            <h2>Recent Messages</h2>
+            <ul style="list-style: none; margin-top: 1rem;">
+                {% for message in all_messages %}
+                <li style="padding: 0.5rem 0; border-bottom: 1px solid var(--border-color);">
+                    <strong>{{ message.subject }}</strong>
+                    <br>
+                    From: {{ message.sender.username }}
+                    <br>
+                    <span style="font-size: 0.875rem; opacity: 0.7;">{{ message.timestamp|date:"M d, H:i" }}</span>
+                </li>
+                {% empty %}
+                <li>No messages found.</li>
+                {% endfor %}
+            </ul>
         </div>
     </div>
 </div>
