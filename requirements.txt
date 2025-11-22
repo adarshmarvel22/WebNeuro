@@ -1,0 +1,4 @@
+Django==4.2.25
+python-dotenv==1.0.0
+django-allauth==0.57.0
+Pillow

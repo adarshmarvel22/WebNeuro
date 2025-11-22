@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+
+{% block title %}Sent Messages - WebAgency{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1 class="mb-4">Sent Messages</h1>
+    <div class="mb-4">
+        <a href="{% url 'compose_message' %}" class="btn btn-primary">Compose Message</a>
+        <a href="{% url 'inbox' %}" class="btn btn-text">Inbox</a>
+    </div>
+
+    <div class="card"
+        style="background-color: var(--card-bg); padding: 2rem; border-radius: 0.5rem; box-shadow: var(--shadow);">
+        <ul style="list-style: none;">
+            {% for message in messages %}
+            <li style="padding: 1rem 0; border-bottom: 1px solid var(--border-color);">
+                <a href="{% url 'view_message' message.id %}"
+                    style="text-decoration: none; color: inherit; display: block;">
+                    <div style="display: flex; justify-content: space-between;">
+                        <span>To: {{ message.recipient.username }}</span>
+                        <span style="font-size: 0.875rem; opacity: 0.7;">{{ message.timestamp|date:"M d, Y H:i"
+                            }}</span>
+                    </div>
+                    <div class="mt-1">{{ message.subject }}</div>
+                </a>
+            </li>
+            {% empty %}
+            <li>No sent messages.</li>
+            {% endfor %}
+        </ul>
+    </div>
+</div>
+{% endblock %}

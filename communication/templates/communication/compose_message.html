@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+
+{% block title %}Compose Message - WebAgency{% endblock %}
+
+{% block content %}
+<div class="container" style="max-width: 600px; margin-top: 4rem;">
+    <div class="card"
+        style="background-color: var(--card-bg); padding: 2rem; border-radius: 0.5rem; box-shadow: var(--shadow);">
+        <h2 class="text-center mb-4">Compose Message</h2>
+        <form method="post">
+            {% csrf_token %}
+            <div class="mb-4">
+                <label for="recipient" style="display: block; margin-bottom: 0.5rem;">Recipient</label>
+                <select id="recipient" name="recipient" required
+                    style="width: 100%; padding: 0.75rem; border: 1px solid var(--border-color); border-radius: 0.375rem; background-color: var(--bg-color); color: var(--text-color);">
+                    <option value="">Select Recipient</option>
+                    {% for recipient in recipients %}
+                    <option value="{{ recipient.username }}">{{ recipient.username }} ({{ recipient.role }})</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="mb-4">
+                <label for="subject" style="display: block; margin-bottom: 0.5rem;">Subject</label>
+                <input type="text" id="subject" name="subject" required
+                    style="width: 100%; padding: 0.75rem; border: 1px solid var(--border-color); border-radius: 0.375rem; background-color: var(--bg-color); color: var(--text-color);">
+            </div>
+            <div class="mb-4">
+                <label for="body" style="display: block; margin-bottom: 0.5rem;">Message</label>
+                <textarea id="body" name="body" rows="6" required
+                    style="width: 100%; padding: 0.75rem; border: 1px solid var(--border-color); border-radius: 0.375rem; background-color: var(--bg-color); color: var(--text-color);"></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary" style="width: 100%;">Send Message</button>
+            <a href="{% url 'inbox' %}" class="btn btn-text mt-2" style="display: block; text-align: center;">Cancel</a>
+        </form>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+
+{% block title %}Admin Dashboard - WebAgency{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1 class="mb-4">Admin Dashboard</h1>
+
+    <div class="grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem;">
+        <div class="card"
+            style="background-color: var(--card-bg); padding: 2rem; border-radius: 0.5rem; box-shadow: var(--shadow);">
+            <h2>Staff Management</h2>
+            <ul class="mt-4" style="list-style: none;">
+                {% for staff in staff_members %}
+                <li style="padding: 0.5rem 0; border-bottom: 1px solid var(--border-color);">
+                    {{ staff.username }} - {{ staff.email }}
+                    <a href="/admin/accounts/user/{{ staff.id }}/change/" class="btn btn-text"
+                        style="float: right; color: var(--primary-color);">Manage</a>
+                </li>
+                {% empty %}
+                <li>No staff members found.</li>
+                {% endfor %}
+            </ul>
+            <a href="/admin/accounts/user/add/" class="btn btn-primary mt-4">Add Staff</a>
+        </div>
+
+        <div class="card"
+            style="background-color: var(--card-bg); padding: 2rem; border-radius: 0.5rem; box-shadow: var(--shadow);">
+            <h2>Recent Orders</h2>
+            <ul class="mt-4" style="list-style: none;">
+                {% for order in recent_orders %}
+                <li style="padding: 0.5rem 0; border-bottom: 1px solid var(--border-color);">
+                    #{{ order.id }} - {{ order.service.title }} ({{ order.status }})
+                </li>
+                {% empty %}
+                <li>No recent orders.</li>
+                {% endfor %}
+            </ul>
+            <a href="/admin/services/order/" class="btn btn-text mt-4">View All Orders</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

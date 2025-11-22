@@ -1,0 +1,8 @@
+from django.urls import path
+from . import views
+
+urlpatterns = [
+    path('admin/', views.admin_dashboard, name='admin_dashboard'),
+    path('staff/', views.staff_dashboard, name='staff_dashboard'),
+    path('customer/', views.customer_dashboard, name='customer_dashboard'),
+]

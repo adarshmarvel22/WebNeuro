@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block title %}View Message - WebAgency{% endblock %}
+
+{% block content %}
+<div class="container" style="max-width: 800px; margin-top: 4rem;">
+    <div class="mb-4">
+        <a href="{% url 'inbox' %}" class="btn btn-text">&larr; Back to Inbox</a>
+    </div>
+    <div class="card"
+        style="background-color: var(--card-bg); padding: 2rem; border-radius: 0.5rem; box-shadow: var(--shadow);">
+        <div style="border-bottom: 1px solid var(--border-color); padding-bottom: 1rem; margin-bottom: 1rem;">
+            <h2 class="mb-2">{{ message.subject }}</h2>
+            <div style="display: flex; justify-content: space-between; opacity: 0.8;">
+                <span>From: <strong>{{ message.sender.username }}</strong></span>
+                <span>{{ message.timestamp|date:"M d, Y H:i" }}</span>
+            </div>
+            <div style="opacity: 0.8;">To: {{ message.recipient.username }}</div>
+        </div>
+        <div style="white-space: pre-wrap;">{{ message.body }}</div>
+    </div>
+</div>
+{% endblock %}

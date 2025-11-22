@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+
+{% block title %}Staff Dashboard - WebAgency{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1 class="mb-4">Staff Dashboard</h1>
+
+    <div class="grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem;">
+        <div class="card"
+            style="background-color: var(--card-bg); padding: 2rem; border-radius: 0.5rem; box-shadow: var(--shadow);">
+            <h2>Assigned Appointments</h2>
+            <ul class="mt-4" style="list-style: none;">
+                {% for appointment in assigned_appointments %}
+                <li style="padding: 0.5rem 0; border-bottom: 1px solid var(--border-color);">
+                    {{ appointment.date|date:"M d, Y H:i" }} - {{ appointment.customer.username }}
+                    <span style="float: right;" class="badge">{{ appointment.status }}</span>
+                </li>
+                {% empty %}
+                <li>No assigned appointments.</li>
+                {% endfor %}
+            </ul>
+        </div>
+
+        <div class="card"
+            style="background-color: var(--card-bg); padding: 2rem; border-radius: 0.5rem; box-shadow: var(--shadow);">
+            <h2>Assigned Demos</h2>
+            <ul class="mt-4" style="list-style: none;">
+                {% for demo in assigned_demos %}
+                <li style="padding: 0.5rem 0; border-bottom: 1px solid var(--border-color);">
+                    {{ demo.date|date:"M d, Y H:i" }} - {{ demo.product_interest }}
+                    <span style="float: right;" class="badge">{{ demo.status }}</span>
+                </li>
+                {% empty %}
+                <li>No assigned demos.</li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+</div>
+{% endblock %}

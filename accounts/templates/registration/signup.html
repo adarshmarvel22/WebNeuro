@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+
+{% block title %}Sign Up - WebAgency{% endblock %}
+
+{% block content %}
+<div class="container" style="max-width: 400px; margin-top: 4rem;">
+    <div class="card"
+        style="background-color: var(--card-bg); padding: 2rem; border-radius: 0.5rem; box-shadow: var(--shadow);">
+        <h2 class="text-center mb-4">Sign Up</h2>
+        <form method="post">
+            {% csrf_token %}
+            {% for field in form %}
+            <div class="mb-4">
+                <label for="{{ field.id_for_label }}" style="display: block; margin-bottom: 0.5rem;">{{ field.label
+                    }}</label>
+                {{ field }}
+                {% if field.help_text %}
+                <small style="display: block; color: var(--text-color); opacity: 0.7; margin-top: 0.25rem;">{{
+                    field.help_text }}</small>
+                {% endif %}
+                {% if field.errors %}
+                <div style="color: red; font-size: 0.875rem; margin-top: 0.25rem;">
+                    {{ field.errors }}
+                </div>
+                {% endif %}
+            </div>
+            {% endfor %}
+            <button type="submit" class="btn btn-primary" style="width: 100%;">Sign Up</button>
+        </form>
+
+        <div class="mt-4 text-center">
+            {% load socialaccount %}
+            <a href="{% provider_login_url 'google' %}" class="btn"
+                style="width: 100%; background-color: #db4437; color: white; margin-bottom: 1rem; display: block; text-align: center; text-decoration: none;">Sign
+                Up with Google</a>
+        </div>
+
+        <p class="text-center mt-4">
+            Already have an account? <a href="{% url 'login' %}" style="color: var(--primary-color);">Login</a>
+        </p>
+    </div>
+</div>
+
+<style>
+    input[type="text"],
+    input[type="password"],
+    input[type="email"] {
+        width: 100%;
+        padding: 0.75rem;
+        border: 1px solid var(--border-color);
+        border-radius: 0.375rem;
+        background-color: var(--bg-color);
+        color: var(--text-color);
+        transition: border-color 0.2s ease;
+    }
+
+    input:focus {
+        outline: none;
+        border-color: var(--primary-color);
+    }
+</style>
+{% endblock %}
