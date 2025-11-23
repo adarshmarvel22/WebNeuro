@@ -15,8 +15,7 @@
             {% endif %}
             <h2>{{ service.title }}</h2>
             <p class="mt-2" style="flex-grow: 1;">{{ service.description }}</p>
-            <p class="mt-4" style="font-size: 1.5rem; font-weight: bold; color: var(--primary-color);">${{ service.price
-                }}</p>
+            <p class="mt-4" style="font-size: 1.5rem; font-weight: bold; color: var(--primary-color);">${{ service.price }}</p>
             {% if user.is_authenticated and user.role == 'CUSTOMER' %}
             <a href="{% url 'buy_service' service.id %}" class="btn btn-primary mt-4 text-center">Buy Now</a>
             {% elif not user.is_authenticated %}

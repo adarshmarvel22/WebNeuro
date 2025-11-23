@@ -13,7 +13,11 @@
 <body>
     <header class="header">
         <div class="container header-content">
-            <a href="{% url 'home' %}" class="logo">WebAgency</a>
+            <a href="{% url 'home' %}" class="logo">
+                <span
+                    style="background-color: var(--primary-color); color: white; padding: 0.25rem 0.5rem; border-radius: 0.25rem;">N</span>
+                WebAgency
+            </a>
             <nav class="nav">
                 <ul class="nav-list">
                     <li><a href="{% url 'home' %}" class="nav-link">Home</a></li>
